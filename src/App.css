@@ -1,184 +1,75 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
 
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+body, html, #root {
+  margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden;
+  font-family: 'Inter', sans-serif;
+  background-color: #0f0f0f;
 }
 
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
+.app-container { 
+  position: relative; 
+  width: 100vw; 
+  height: 100vh; 
 }
 
-#center {
+/* --- CONTENEDOR DEL LIENZO 3D (Zona Derecha) --- */
+.canvas-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%; /* Le damos el 60% de la pantalla a la silla */
+  height: 100%;
+  z-index: 1;
+  /* Aseguramos que el canvas esté centrado en este div */
   display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  justify-content: center;
+  align-items: center;
 }
 
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+/* --- INTERFAZ DE USUARIO (Flotante) --- */
+.ui-overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; 
+  z-index: 10; 
 }
 
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+.logo { 
+  position: absolute; top: 2rem; left: 2rem;
+  color: white; font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; 
 }
 
-#next-steps ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
+.chair-selector {
+  position: absolute; top: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; background: rgba(30, 30, 30, 0.8); border-radius: 50px; padding: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); pointer-events: auto;
+}
+.chair-selector button {
+  background: transparent; color: #a0a0a0; border: none; padding: 10px 20px;
+  border-radius: 40px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease;
+}
+.chair-selector button.active { background: white; color: #0f0f0f; }
 
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+/* Textos posicionados en la mitad izquierda */
+.product-info { 
+  position: absolute;
+  top: 50%;
+  left: 5%; 
+  transform: translateY(-50%);
+  width: 35%; /* Ocupa el 35% izquierdo */
+  pointer-events: auto; 
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.category { color: #a0a0a0; font-size: 0.8rem; letter-spacing: 1px; margin-bottom: 0.5rem; }
+.title { color: white; font-size: 3.5rem; line-height: 1.1; font-weight: 600; margin: 0 0 1rem 0; letter-spacing: -1px; }
+.price { color: #a0a0a0; font-size: 1rem; margin-bottom: 2rem; }
+
+.bottom-menu {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 10px; background: rgba(30, 30, 30, 0.8); border-radius: 50px;
+  padding: 10px 20px; border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px); pointer-events: auto;
 }
-
-.ticks {
-  position: relative;
-  width: 100%;
-
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
-
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+.bottom-menu button {
+  background: transparent; color: #a0a0a0; border: none; cursor: pointer; font-size: 0.9rem; font-weight: 600;
 }
+.bottom-menu button:hover { color: white; }

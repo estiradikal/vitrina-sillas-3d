@@ -1,11 +1,10 @@
 import { useGLTF } from '@react-three/drei';
 
-export function Chair(props) {
-  // Carga el modelo 3D desde la carpeta public
-  const { scene } = useGLTF('/models/chair.glb');
-  
+export function Chair({ modelPath, ...props }) {
+  const { scene } = useGLTF(modelPath);
   return <primitive object={scene} {...props} />;
 }
 
-// Precarga el modelo para que cargue más rápido
+// Precargamos ambos modelos para que el cambio sea instantáneo
 useGLTF.preload('/models/chair.glb');
+useGLTF.preload('/models/chair-gamer.glb');
