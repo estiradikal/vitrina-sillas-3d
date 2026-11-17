@@ -20,6 +20,9 @@ export default function App() {
   const [isGamer, setIsGamer] = useState(false);
   const [menuActivo, setMenuActivo] = useState(null); 
   
+  // NUEVO: Estado para el mensaje de guardado
+  const [showToast, setShowToast] = useState(false);
+
   const { colorTela, setColorTela, materialPatas, setMaterialPatas } = useConfigStore();
 
   const modelPath = isGamer
@@ -27,8 +30,22 @@ export default function App() {
     : '/models/chair.glb?v=ergo-materials-v7';
   const coloresDisponibles = ['#a0a0a0', '#2a2a2a', '#1a56db', '#991b1b', '#15803d'];
 
+  // NUEVO: Función al hacer clic en Guardar
+  const handleGuardar = () => {
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2500);
+  };
+
   return (
     <div className="app-container">
+      
+      {/* NUEVO: Mensaje flotante de guardado */}
+      {showToast && (
+        <div className="toast-message">
+          Configuración guardada
+        </div>
+      )}
+
       <div className="ui-overlay">
         <div className="logo">VITRINA</div>
 
@@ -50,6 +67,8 @@ export default function App() {
         <div className="bottom-menu">
           <button onClick={() => setMenuActivo(menuActivo === 'color' ? null : 'color')}>Color</button>
           <button onClick={() => setMenuActivo(menuActivo === 'material' ? null : 'material')}>Material</button>
+          {/* NUEVO: Botón de Guardar */}
+          <button onClick={handleGuardar} style={{ color: '#00ff88' }}>Guardar</button>
         </div>
 
         {menuActivo === 'color' && (
