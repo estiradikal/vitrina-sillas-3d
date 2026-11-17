@@ -22,7 +22,9 @@ export default function App() {
   
   const { colorTela, setColorTela, materialPatas, setMaterialPatas } = useConfigStore();
 
-  const modelPath = isGamer ? '/models/chair-gamer.glb' : '/models/chair.glb';
+  const modelPath = isGamer
+    ? '/models/chair-gamer.glb?v=gamer-materials-v9'
+    : '/models/chair.glb?v=ergo-materials-v7';
   const coloresDisponibles = ['#a0a0a0', '#2a2a2a', '#1a56db', '#991b1b', '#15803d'];
 
   return (
